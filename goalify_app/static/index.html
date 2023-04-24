@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+     H1 {
+    font-size: 440%; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    color: #333366;
+    text-align: center;
+    }
+    body {
+      background-color: #a3a3aa;
+      font-style: italic;
+      text-align: center;
+    }
+    form {
+      font-size:larger;
+    }
+    button{
+      font-size: large;
+    }
+    </style>
+    
+  </head>  
+  <body>
+      <h1>API Client</h1>
+      <form>
+        <label for="api-url">API Endpoint URL:</label>
+        <input type="text" id="api-url" name="api-url" required>
+    
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+    
+        <button type="submit" id="submit">Submit</button>
+      </form>
+
+    <label for="server-response">Server Response</label> <br>
+    <textarea id="server-response" rows="10" cols="50" readonly></textarea>
+
+   <script>
+      
+      document.getElementById('submit').addEventListener('click', function(event) {
+      event.preventDefault();
+        const apiUrl = document.getElementById('api-url').value;
+        const name = document.getElementById('name').value;
+    
+        fetch(apiUrl + '?name=' + encodeURIComponent(name))
+        .then(response => response.text())
+        .then(data => document.getElementById('server-response').textContent = data)
+  
+      });
+
+    </script>
+
+  </body>

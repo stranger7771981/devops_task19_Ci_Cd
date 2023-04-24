@@ -1,0 +1,19 @@
+---
+- name: Setup App
+  hosts: all
+  remote_user: ubuntu
+  become: true
+
+  tasks:
+
+  - name: Ping
+    ping:
+
+  - name: run container
+    docker_container:
+      name: goalify_app
+      state: started
+      image: free1as2bird/goalify_app
+      pull: true
+      ports:
+       - "80:80"
