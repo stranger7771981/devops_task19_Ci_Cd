@@ -10,8 +10,12 @@ jobs:
   build:
   
     runs-on: ubuntu-latest
+    env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
     steps:
+          
       - name: Checkout
         uses: actions/checkout@v3
         
@@ -31,3 +35,34 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/goalify_app
+    
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Terraform Install
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.4.0
+          
+      - name: Terraform Init
+        run: terraform init
+          
+      - name: Terraform Plan
+        run: terraform plan
+        
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          
+      - name: Install Ansible
+        run: sudo apt-get update && sudo apt-get install -y ansible
+    
+      - name: Install Docker Dependencies
+        run:  ansible-playbook ansible/Install_Docker_Dependencies.yml
+        
+      - name: Run Container
+        run:  ansible-playbook ansible/Run_Container.yml
