@@ -62,7 +62,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ansible
     
       - name: Install Docker Dependencies
-        run:  ansible-playbook ansible/Install_Docker_Dependencies.yml
+        run:  ansible-playbook -i ansible/inventory.yml ansible/Install_Docker_Dependencies.yml
         
       - name: Run Container
-        run:  ansible-playbook ansible/Run_Container.yml
+        run:  ansible-playbook -i ansible/inventory.yml ansible/Run_Container.yml
