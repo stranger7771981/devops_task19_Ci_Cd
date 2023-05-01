@@ -58,8 +58,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          run: ls -la /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd
-               ls -la
+          
+      - name: ls -la
+        run: ls -la /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd
+             ls -la
           
       - name: Install Ansible
         run: sudo apt-get update && sudo apt-get install -y ansible
