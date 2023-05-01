@@ -60,8 +60,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} 
           
       - name: ls -la
-        run: ls -la /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd
-             ls -la
+        run: |
+          ls -la /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd
+          cat /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd/ansible/inventory.yml
           
       - name: Install Ansible
         run: sudo apt-get update && sudo apt-get install -y ansible
