@@ -63,14 +63,14 @@ jobs:
         run: |
           ls -la /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd
           cat /home/runner/work/devops_task19_Ci_Cd/devops_task19_Ci_Cd/ansible/inventory.yml
+          echo "${SSH_PRIVATE_KEY}" > private-key.pem
+          chmod 400 private-key.pem
           
       - name: Install Ansible
         run: sudo apt-get update && sudo apt-get install -y ansible
     
       - name: Install Docker Dependencies
-        env:
-            private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        run:  ansible-playbook -i ansible/inventory.yml --private-key ${{ secrets.SSH_PRIVATE_KEY }} ansible/Install_Docker_Dependencies.yml
+        run:  ansible-playbook -i ansible/inventory.yml --private-key ./private-key.pem ansible/Install_Docker_Dependencies.yml
         
       - name: Run Container
         run:  ansible-playbook -i ansible/inventory.yml ansible/Run_Container.yml
