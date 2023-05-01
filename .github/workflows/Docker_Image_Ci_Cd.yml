@@ -65,7 +65,7 @@ jobs:
       - name: Install Docker Dependencies
         env:
             private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        run:  ansible-playbook --private-key ${{ secrets.SSH_PRIVATE_KEY }} -i ansible/inventory.yml ansible/Install_Docker_Dependencies.yml
+        run:  ansible-playbook -i ansible/inventory.yml --private-key ${{ secrets.SSH_PRIVATE_KEY }} ansible/Install_Docker_Dependencies.yml
         
       - name: Run Container
         run:  ansible-playbook -i ansible/inventory.yml ansible/Run_Container.yml
